@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <changeSet id="init_message" author="User_name">
+        <preConditions>
+            <not>
+                <tableExists tableName="message"/>
+            </not>
+        </preConditions>
+        <sql>
+            CREATE TABLE message
+            (
+                id     BIGINT       NOT NULL,
+                `from` VARCHAR(255) NULL,
+                `to`   VARCHAR(255) NULL,
+                text   VARCHAR(255) NULL,
+                CONSTRAINT pk_message PRIMARY KEY (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
