@@ -1,12 +1,15 @@
 package org.test.microservice.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.test.microservice.en.MessageType;
 import org.test.microservice.usecase.model.Message;
 
 import java.util.List;
 
 public interface MessageService {
-    List<Message> getAll();
+    Page<Message> getAll(Pageable pageable);
 
     Message getById(long id);
 

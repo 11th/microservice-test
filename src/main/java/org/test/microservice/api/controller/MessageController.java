@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.test.microservice.en.MessageType;
@@ -22,8 +25,8 @@ public class MessageController {
 
     @GetMapping
     @NotNull
-    public List<MessageDto> getAll() {
-        return messagePresenter.getAll();
+    public Page<MessageDto> getAll(Pageable pageable) {
+        return messagePresenter.getAll(pageable);
     }
 
     @GetMapping("/{id}")
@@ -37,6 +40,7 @@ public class MessageController {
     public List<MessageDto> getByType(@RequestParam MessageType type) {
         return messagePresenter.getByType(type);
     }
+
 
     //todo: to test only!
     @PostMapping

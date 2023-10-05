@@ -2,10 +2,14 @@ package org.test.microservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.test.microservice.database.entity.MessageEntity;
 import org.test.microservice.database.repository.MessageRepository;
 import org.test.microservice.en.MessageType;
+import org.test.microservice.exception.MessageNotFoundException;
 import org.test.microservice.usecase.model.mapper.MessageMapper;
 import org.test.microservice.usecase.model.Message;
 
@@ -20,29 +24,28 @@ public class MessageServiceImpl implements MessageService {
     private final MessageMapper messageMapper;
 
     @Override
-    public List<Message> getAll() {
-        return messageRepository.findAll().stream()
-                .map(messageMapper::mapFromEntity)
-                .collect(Collectors.toList());
+    public Page<Message> getAll(Pageable pageable) {
+        return messageRepository.findAll(pageable).map(messageMapper::mapFromEntity);
     }
 
     @Override
     public Message getById(long id) {
         MessageEntity messageEntity = messageRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Message not found"));
+                .orElseThrow(() -> new MessageNotFoundException("Message not found"));
         return messageMapper.mapFromEntity(messageEntity);
     }
 
     @Override
     public List<Message> getByType(MessageType type) {
-        return messageRepository.findByType(type).stream()
+        List<Message> messages = messageRepository.findByType(type).stream()
                 .map(messageMapper::mapFromEntity)
                 .collect(Collectors.toList());
+        log.debug("Message count {}", messages.size());
+        return messages;
     }
 
     @Override
     public void save(Message message) {
-        MessageEntity messageEntity = messageMapper.mapToEntity(message);
-        messageRepository.save(messageEntity);
+        messageRepository.save(messageMapper.mapToEntity(message));
     }
 }

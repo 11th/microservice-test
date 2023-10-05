@@ -1,6 +1,6 @@
 package org.test.microservice.en;
 
-import org.test.microservice.exception.RabbitConsumerException;
+import org.test.microservice.exception.MessageTypeNotFoundException;
 
 import java.util.Arrays;
 
@@ -23,6 +23,6 @@ public enum MessageType {
         return Arrays.stream(values())
                 .filter(mt -> mt.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new RabbitConsumerException(String.format("MessageType with id %d not found", id)));
+                .orElseThrow(() -> new MessageTypeNotFoundException(String.format("MessageType with id %d not found", id)));
     }
 }

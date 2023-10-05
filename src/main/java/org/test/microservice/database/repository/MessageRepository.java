@@ -10,4 +10,6 @@ import java.util.Collection;
 @Repository
 public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
     Collection<MessageEntity> findByType(MessageType messageType);
+
+    long countByType(MessageType type);
 }
