@@ -1,7 +1,6 @@
 package org.test.microservice.service;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.test.microservice.en.MessageType;
 import org.test.microservice.usecase.model.Message;

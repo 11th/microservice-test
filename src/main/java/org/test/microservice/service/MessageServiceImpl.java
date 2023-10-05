@@ -2,8 +2,8 @@ package org.test.microservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.test.microservice.database.entity.MessageEntity;
@@ -36,6 +36,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Cacheable("messagesByType")
     public List<Message> getByType(MessageType type) {
         List<Message> messages = messageRepository.findByType(type).stream()
                 .map(messageMapper::mapFromEntity)
