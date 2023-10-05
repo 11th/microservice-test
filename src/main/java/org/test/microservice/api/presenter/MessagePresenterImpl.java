@@ -11,39 +11,37 @@ import org.test.microservice.usecase.GetMessageUseCase;
 import org.test.microservice.usecase.model.Message;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 @Log4j2
 public class MessagePresenterImpl implements MessagePresenter {
+    private final GetMessageUseCase getMessageUseCase;
+    private final MessageDtoMapper messageDtoMapper;
 
-  private final GetMessageUseCase getMessageUseCase;
-  private final MessageDtoMapper messageDtoMapper;
-
-  @Override
-  @NotNull
-  public List<MessageDto> getAll() {
-    List<MessageDto> messageDtoList = new ArrayList<>();
-    for (Message message : getMessageUseCase.getAll()) {
-      messageDtoList.add(messageDtoMapper.map(message));
+    @Override
+    @NotNull
+    public List<MessageDto> getAll() {
+        return getMessageUseCase.getAll().stream()
+                .map(messageDtoMapper::map)
+                .collect(Collectors.toList());
     }
-    return messageDtoList;
-  }
 
-  @Override
-  @NotNull
-  public MessageDto getById(long id) {
-    return messageDtoMapper.map(getMessageUseCase.getById((int) id));
-  }
-
-  @Override
-  @NotNull
-  public List<MessageDto> getByType(@NotNull MessageType type) {
-    List<MessageDto> messageDtoList = new ArrayList<>();
-    for (Message message : getMessageUseCase.getAll()) {
-      messageDtoList.add(messageDtoMapper.map(message));
+    @Override
+    @NotNull
+    public MessageDto getById(long id) {
+        return messageDtoMapper.map(getMessageUseCase.getById(id));
     }
-    log.debug("Message count {}", messageDtoList);
-    return Collections.emptyList();
-  }
+
+    @Override
+    @NotNull
+    public List<MessageDto> getByType(@NotNull MessageType type) {
+        List<MessageDto> messageDtoList = new ArrayList<>();
+        messageDtoList = getMessageUseCase.getByType(type).stream()
+                .map(messageDtoMapper::map)
+                .collect(Collectors.toList());
+        log.debug("Message count {}", messageDtoList);
+        return messageDtoList;
+    }
 }

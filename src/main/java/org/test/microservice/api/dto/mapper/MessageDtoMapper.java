@@ -6,6 +6,5 @@ import org.test.microservice.usecase.model.Message;
 
 @Mapper
 public interface MessageDtoMapper {
-
-  MessageDto map(Message message);
+    MessageDto map(Message message);
 }

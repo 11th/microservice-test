@@ -3,12 +3,13 @@ package org.test.microservice.api.dto;
 import lombok.Data;
 import org.test.microservice.en.MessageType;
 
-@Data
-public class MessageDto {
+import java.io.Serializable;
 
-  private long id;
-  private String from;
-  private String to;
-  private String text;
-  private MessageType type;
+@Data
+public class MessageDto implements Serializable {
+    private long id;
+    private String from;
+    private String to;
+    private String text;
+    private MessageType type;
 }

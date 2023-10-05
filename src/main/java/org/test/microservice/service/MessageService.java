@@ -6,12 +6,11 @@ import org.test.microservice.usecase.model.Message;
 import java.util.List;
 
 public interface MessageService {
+    List<Message> getAll();
 
-  List<Message> getAll();
+    Message getById(long id);
 
-  Message getById();
+    List<Message> getByType(MessageType type);
 
-  List<Message> getByType(MessageType type);
-
-  void save(Message message);
+    void save(Message message);
 }

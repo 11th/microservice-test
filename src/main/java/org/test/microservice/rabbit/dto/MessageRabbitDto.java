@@ -4,17 +4,18 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-@Data
-public class MessageRabbitDto {
+import java.io.Serializable;
 
-  @NotNull
-  private Long id;
-  @Nullable
-  private String from;
-  @NotNull
-  private String to;
-  @NotNull
-  private String text;
-  @NotNull
-  private Integer type;
+@Data
+public class MessageRabbitDto implements Serializable {
+    @NotNull
+    private Long id;
+    @Nullable
+    private String from;
+    @NotNull
+    private String to;
+    @NotNull
+    private String text;
+    @NotNull
+    private Integer type;
 }

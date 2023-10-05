@@ -7,13 +7,12 @@ import org.test.microservice.api.dto.MessageDto;
 import java.util.List;
 
 public interface MessagePresenter {
+    @NotNull
+    List<MessageDto> getAll();
 
-  @NotNull
-  List<MessageDto> getAll();
+    @NotNull
+    MessageDto getById(long id);
 
-  @NotNull
-  MessageDto getById(long id);
-
-  @NotNull
-  List<MessageDto> getByType(@NotNull MessageType type);
+    @NotNull
+    List<MessageDto> getByType(@NotNull MessageType type);
 }
