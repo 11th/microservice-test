@@ -38,12 +38,4 @@ public class MessageController {
     public List<MessageDto> getByType(@RequestParam MessageType type) {
         return messagePresenter.getByType(type);
     }
-
-
-    //todo: for test only!
-    @PostMapping
-    public ResponseEntity<String> addMessages(@RequestBody List<MessageRabbitDto> messages) {
-        template.convertAndSend("", "sms.data", messages);
-        return ResponseEntity.ok("Messages added to queue");
-    }
 }
