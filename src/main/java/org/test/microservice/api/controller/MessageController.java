@@ -2,10 +2,8 @@ package org.test.microservice.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +40,7 @@ public class MessageController {
     }
 
 
-    //todo: to test only!
+    //todo: for test only!
     @PostMapping
     public ResponseEntity<String> addMessages(@RequestBody List<MessageRabbitDto> messages) {
         template.convertAndSend("", "sms.data", messages);

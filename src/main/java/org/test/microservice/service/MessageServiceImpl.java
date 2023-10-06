@@ -2,10 +2,12 @@ package org.test.microservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.test.microservice.database.entity.MessageEntity;
 import org.test.microservice.database.repository.MessageRepository;
 import org.test.microservice.en.MessageType;
@@ -46,6 +48,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @CacheEvict(value = "messagesByType", key = "#message.type")
+    @Transactional
     public void save(Message message) {
         messageRepository.save(messageMapper.mapToEntity(message));
     }

@@ -13,7 +13,7 @@ public interface MessageRabbitDtoMapper {
     @Mapping(target = "type", expression = "java(mapMessageType(messageRabbitDto.getType()))")
     Message map(MessageRabbitDto messageRabbitDto);
 
-    List<Message> mapToList(List<MessageRabbitDto> messageRabbitDtoList);
+    List<Message> mapToMessageList(List<MessageRabbitDto> messageRabbitDtoList);
 
     default MessageType mapMessageType(int type) {
         return MessageType.fromId(type);

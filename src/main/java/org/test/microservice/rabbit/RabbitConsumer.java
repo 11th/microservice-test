@@ -34,7 +34,7 @@ public class RabbitConsumer {
 
     private void saveMessages(List<MessageRabbitDto> messages) {
         log.info("Messages: {}", messages);
-        saveMessageUseCase.saveAll(messageRabbitDtoMapper.mapToList(messages));
+        saveMessageUseCase.saveAll(messageRabbitDtoMapper.mapToMessageList(messages));
     }
 
     private void saveMetrics(List<MessageRabbitDto> messages) {

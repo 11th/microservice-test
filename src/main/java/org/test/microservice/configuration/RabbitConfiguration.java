@@ -12,16 +12,17 @@ import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.test.microservice.rabbit.RabbitProperties;
-import org.test.microservice.rabbit.RabbitValidator;
+import org.springframework.validation.Validator;
 
 @Configuration
 @RequiredArgsConstructor
 public class RabbitConfiguration implements RabbitListenerConfigurer {
     private final RabbitProperties rabbitProperties;
+    private final Validator validator;
 
     @Override
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
-        registrar.setValidator(new RabbitValidator());
+        registrar.setValidator(validator);
     }
 
     @Bean
