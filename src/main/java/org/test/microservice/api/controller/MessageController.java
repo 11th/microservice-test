@@ -2,15 +2,12 @@ package org.test.microservice.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.test.microservice.en.MessageType;
 import org.test.microservice.api.dto.MessageDto;
 import org.test.microservice.api.presenter.MessagePresenter;
-import org.test.microservice.rabbit.dto.MessageRabbitDto;
 
 import java.util.List;
 
@@ -19,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MessageController {
     private final MessagePresenter messagePresenter;
-    private final RabbitTemplate template;
 
     @GetMapping
     @NotNull

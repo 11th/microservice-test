@@ -36,6 +36,24 @@ public class RabbitConfiguration implements RabbitListenerConfigurer {
     }
 
     @Bean
+    public TopicExchange topicExchange() {
+        return new TopicExchange(rabbitProperties.getExchange());
+    }
+
+    @Bean
+    public Queue messageQueue() {
+        return QueueBuilder.durable(rabbitProperties.getQueue())
+                .withArgument("x-dead-letter-exchange", rabbitProperties.getFailureExchange())
+                .withArgument("x-dead-letter-routing-key", rabbitProperties.getFailureRouting())
+                .build();
+    }
+
+    @Bean
+    Binding deliveryBinding(Queue messageQueue, TopicExchange topicExchange) {
+        return BindingBuilder.bind(messageQueue).to(topicExchange).with(rabbitProperties.getRoutingKey());
+    }
+
+    @Bean
     public SimpleRabbitListenerContainerFactory messageListenerContainerFactory(SimpleRabbitListenerContainerFactoryConfigurer factoryConfigurer) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factoryConfigurer.configure(factory, connectionFactory());
@@ -54,13 +72,5 @@ public class RabbitConfiguration implements RabbitListenerConfigurer {
                         rabbitProperties.getFailureRouting(),
                         null)
         );
-    }
-
-    @Bean
-    public Queue messageQueue() {
-        return QueueBuilder.durable(rabbitProperties.getQueue())
-                .withArgument("x-dead-letter-exchange", rabbitProperties.getFailureExchange())
-                .withArgument("x-dead-letter-routing-key", rabbitProperties.getFailureRouting())
-                .build();
     }
 }
