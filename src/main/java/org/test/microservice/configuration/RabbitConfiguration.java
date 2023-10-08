@@ -49,7 +49,7 @@ public class RabbitConfiguration implements RabbitListenerConfigurer {
     }
 
     @Bean
-    Binding deliveryBinding(Queue messageQueue, TopicExchange topicExchange) {
+    Binding messageBinding(Queue messageQueue, TopicExchange topicExchange) {
         return BindingBuilder.bind(messageQueue).to(topicExchange).with(rabbitProperties.getRoutingKey());
     }
 
