@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.test.microservice.database.entity.MessageEntity;
 import org.test.microservice.database.repository.MessageRepository;
+import org.test.microservice.database.repository.TypeStatistic;
 import org.test.microservice.en.MessageType;
 import org.test.microservice.exception.MessageNotFoundException;
 import org.test.microservice.usecase.model.mapper.MessageMapper;
@@ -45,6 +46,11 @@ public class MessageServiceImpl implements MessageService {
                 .collect(Collectors.toList());
         log.debug("Message count {}", messages.size());
         return messages;
+    }
+
+    @Override
+    public List<TypeStatistic> getTypeStatistic() {
+        return messageRepository.getTypeStatistic().stream().toList();
     }
 
     @Override
