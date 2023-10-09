@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -37,8 +36,8 @@ public class MessageStatisticScheduler {
 
     private List<CustomMessageEntity> getMessageStatistic() {
         List<CustomMessageEntity> statistic = new ArrayList<>();
-        Arrays.stream(MessageType.values()).forEach(messageType -> {
-            statistic.add(new CustomMessageEntity(messageType, (long) messageService.getByType(messageType).size()));
+        messageService.getTypeStatistic().forEach(typeStat -> {
+            statistic.add(new CustomMessageEntity(typeStat.getType(), typeStat.getCount()));
         });
         return statistic;
     }
