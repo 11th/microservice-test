@@ -6,9 +6,8 @@ import org.test.microservice.en.MessageType;
 
 @Data
 public class CustomMessageEntity {
-
-  @NotNull
-  private MessageType type;
-  @NotNull
-  private Long count;
+    @NotNull
+    private MessageType type;
+    @NotNull
+    private Long count;
 }

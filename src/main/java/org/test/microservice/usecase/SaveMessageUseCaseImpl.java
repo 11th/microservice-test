@@ -11,13 +11,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SaveMessageUseCaseImpl implements SaveMessageUseCase {
+    private final MessageService messageService;
 
-  private final MessageService messageService;
-
-  @Override
-  public void saveAll(@NotNull List<Message> messageList) {
-    for (Message message : messageList) {
-      messageService.save(message);
+    @Override
+    public void saveAll(@NotNull List<Message> messageList) {
+        for (Message message : messageList) {
+            messageService.save(message);
+        }
     }
-  }
 }
